@@ -1,9 +1,34 @@
-import React from 'react';
+import React, {FC} from 'react';
+// @ts-ignore
+import classes from './styles/style.module.css';
+import classnames from 'classnames';
+import {FlexGrid} from "../../components/FlexGrid";
 
-export const Header = () => {
+type HeaderProps = {
+    className: string;
+}
+
+export const Header: FC<HeaderProps> = (
+    {
+        className,
+    }
+) => {
+
+    const classesHeader = classnames(
+        className,
+        classes.header,
+    )
+
     return (
-        <div>
-            Header
+        <div className={classesHeader}>
+            <FlexGrid>
+                <div>
+
+                </div>
+                <div>
+
+                </div>
+            </FlexGrid>
         </div>
     );
 };

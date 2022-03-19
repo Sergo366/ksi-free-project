@@ -1,7 +1,7 @@
 import React, {CSSProperties, FC} from 'react';
 import {GapSizes} from "./types";
 import classNames from 'classnames';
-// @ts-ignore
+//@ts-ignore
 import classes from "./styles/style.module.css";
 
 type FlexGridProps = {

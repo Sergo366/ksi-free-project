@@ -1,9 +1,26 @@
-import React from 'react';
+import React, {FC} from 'react';
+import classNames from 'classnames';
+//@ts-ignore
+import classes from './styles/style.module.css';
 
-export const Navigation = () => {
+type NavigationProps = {
+    className: string;
+}
+
+export const Navigation:FC<NavigationProps> = (
+    {
+        className,
+    }
+) => {
+    const classesNavigation = classNames(
+        className,
+        classes.navigation,
+
+    )
+
     return (
-        <div>
-
+        <div className={classesNavigation}>
+            Navigation
         </div>
     );
 };

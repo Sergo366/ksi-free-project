@@ -1,0 +1,27 @@
+/*@import 'generalView.module.css';*/
+/*@import 'header.module.css';*/
+/*@import 'navigation.module.css';*/
+
+.generalView {
+    display: grid;
+    grid-template-areas:
+            "nav header header"
+            "nav content content"
+            "nav content content";
+}
+
+.navigation {
+    grid-area: nav;
+    background-color: green;
+    height: 100vh;
+    width: 250px;
+}
+
+.header {
+    grid-area: header;
+    background-color: red;
+    height: 100px;
+    width: 100%;
+}
+
+.content {}
