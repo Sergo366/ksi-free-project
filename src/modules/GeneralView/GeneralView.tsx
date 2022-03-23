@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {Header} from "./Header";
 import {Navigation} from "./Navigation";
-//@ts-ignore
 import classes from './styles/style.module.css';
 import {PaddingBox} from "../../components/PaddingBox";
 

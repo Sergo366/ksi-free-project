@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import classNames from 'classnames';
-//@ts-ignore
 import classes from './styles/style.module.css';
 
 type NavigationProps = {

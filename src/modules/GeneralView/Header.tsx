@@ -1,8 +1,7 @@
 import React, {FC} from 'react';
-// @ts-ignore
-import classes from './styles/style.module.css';
 import classnames from 'classnames';
 import {FlexGrid} from "../../components/FlexGrid";
+import classes from './styles/style.module.css'
 
 type HeaderProps = {
     className: string;
