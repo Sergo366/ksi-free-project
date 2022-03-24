@@ -1,6 +1,13 @@
 import React, {FC} from 'react';
 import classNames from 'classnames';
-import classes from './styles/style.module.css';
+import baseClasses from './styles/style.module.css';
+import classes from './styles/navigation.module.css';
+import {
+    BrowserRouter as Router,
+    Link,
+} from "react-router-dom";
+import {FlexGrid} from "../../components/FlexGrid";
+import {PaddingBox} from "../../components/PaddingBox";
 
 type NavigationProps = {
     className: string;
@@ -13,13 +20,19 @@ export const Navigation:FC<NavigationProps> = (
 ) => {
     const classesNavigation = classNames(
         className,
-        classes.navigation,
-
+        baseClasses.navigation,
+        classes.navItems
     )
 
     return (
-        <div className={classesNavigation}>
-            Navigation
-        </div>
+        <Router>
+            <PaddingBox small>
+                <FlexGrid column className={classesNavigation}>
+                    <Link to={'./'}>Movie</Link>
+                    <Link to={'./'}>Series</Link>
+                    <Link to={'./'}>Cartoon</Link>
+                </FlexGrid>
+            </PaddingBox>
+        </Router>
     );
 };
