@@ -1,0 +1,10 @@
+.container {
+    padding: 2rem;
+    max-height: 100vh;
+    max-width: 100px;
+}
+
+h1 {
+    text-align: center;
+    color: chocolate;
+}
