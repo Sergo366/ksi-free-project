@@ -1,7 +1,10 @@
+@import "~normalize.css";
+
 .container {
     padding: 2rem;
     max-height: 100vh;
     max-width: 100px;
+    color: darkblue;
 }
 
 h1 {

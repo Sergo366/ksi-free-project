@@ -1,31 +1,133 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
+
+const isDev = process.env.NODE_ENV === 'development'
+const isProd = !isDev
+
+const optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: 'all'
+        }
+    }
+
+    if (isProd) {
+        config.minimizer = [
+            new OptimizeCssAssetsPlugin(),
+            new TerserWebpackPlugin(),
+        ]
+    }
+
+    return config
+}
+
+const cssLoaders = (extra) => {
+    const loaders = [MiniCssExtractPlugin.loader, 'css-loader']
+
+    if (extra) {
+        loaders.push(extra)
+    }
+
+    return loaders
+}
+
+const babelOptions = (preset) => {
+    const opts = {
+        presets: [
+            '@babel/preset-env',
+        ],
+        plugins: [
+            '@babel/plugin-proposal-class-properties'
+        ]
+    }
+
+    if (preset) {
+        opts.presets.push(preset)
+    }
+
+    return opts
+}
+
+const jsLoaders = () => {
+    const loaders = [{
+        loader: 'babel-loader',
+        options: babelOptions()
+    }]
+
+    if(isDev) {
+        loaders.push('eslint-loader')
+    }
+
+    return loaders
+}
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
-    entry: {
-        main: './index.js'
-    },
+    entry: ['@babel/polyfill', './index.jsx'],
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
-    stats: {
-        children: true
+    resolve: {
+        extensions: ['.js', '.json', '.ts'],
     },
+    optimization: optimization(),
+    devServer: {
+        port: 4200,
+        hot: isDev,
+    },
+    devtool: isDev && 'source-map',
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.html',
+            minify: {
+                collapseWhitespace: isProd
+            }
         }),
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: cssLoaders()
+            },
+            {
+                test: /\.s[ac]ss$/,
+                use: cssLoaders('sass-loader')
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot)$/,
+                use: ['file-loader']
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: jsLoaders()
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: babelOptions('@babel/preset-typescript',)
+                }
+            },
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: babelOptions('@babel/preset-react',)
+                }
             }
         ]
     }
