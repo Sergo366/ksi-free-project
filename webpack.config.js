@@ -4,6 +4,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
+const EsLintWebpackPlugin = require('eslint-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
@@ -68,7 +69,7 @@ const jsLoaders = () => {
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
-    entry: ['@babel/polyfill', './index.jsx'],
+    entry: ['@babel/polyfill', './Entry.jsx'],
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
@@ -93,6 +94,11 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
         }),
+        new EsLintWebpackPlugin({
+            lintDirtyModulesOnly: true,
+            extensions: ['.js', 'jsx', '.ts', '.tsx'],
+            exclude: ['./node_modules', './dist']
+        })
     ],
     module: {
         rules: [
