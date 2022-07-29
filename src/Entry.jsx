@@ -8,7 +8,7 @@ const Entry = () => {
     return (
         <>
             <div>
-                Hello big dicker
+                Hello big dickerrrr
             </div>
             <div className="container">
                 Webpack Course 2
